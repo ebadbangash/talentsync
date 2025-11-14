@@ -56,9 +56,9 @@ pipeline {
         stage('Health Check') {
             steps {
                 echo 'Performing health check...'
-                sh 'sleep 10'
-                sh 'curl -f http://localhost:3000 || exit 1'
-                sh 'curl -f http://localhost:5001/api/users || exit 1'
+                sh 'sleep 15'
+                sh 'docker exec talentsync-client curl -f http://localhost || exit 1'
+                sh 'docker exec talentsync-server curl -f http://localhost:5000/api/users || exit 1'
             }
         }
     }
