@@ -1,0 +1,64 @@
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6
+    container_name: talentsync-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_DATABASE=talentsync
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - talentsync-network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/talentsync --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Server
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: talentsync-server
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://mongodb:27017/talentsync
+      - JWT_SECRET=your-production-jwt-secret-change-me
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    networks:
+      - talentsync-network
+    volumes:
+      # Mount uploads directory for persistence
+      - ./server/uploads:/app/uploads
+
+  # Frontend Client (React)
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: talentsync-client
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - server
+    networks:
+      - talentsync-network
+
+volumes:
+  mongodb_data:
+    driver: local
+
+networks:
+  talentsync-network:
+    driver: bridge

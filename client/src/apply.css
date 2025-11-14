@@ -1,0 +1,77 @@
+
+.firstPortion{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    margin-bottom: 40px;
+}
+#root .form-container{
+    background-color:whitesmoke;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: larger;
+    margin-top: 120px;
+    align-items: center;
+    margin-left: 15%;
+    padding: 3% 5% 5%;
+    width: 70%;
+    min-height: 700px;
+    border-radius: 20px;
+    box-shadow: 0 18px 35px -26px rgba(0,0,0,0.35);
+}
+
+#root .form-container input,
+#root .form-container textarea{
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,0.15);
+    font-size: 1rem;
+    font-family: inherit;
+}
+#root .form-container input:focus,
+#root .form-container textarea:focus{
+    outline: none;
+    border-color: rgba(60,77,241,0.5);
+    box-shadow: 0 0 0 4px rgba(60,77,241,0.15);
+}
+#first,#last,#phone,#position,#email,#date,#res,#cover{
+    display: block;
+}
+#root .form-container textarea{
+    height: 150px;
+    resize: vertical;
+}
+#resume{
+    cursor: pointer;
+}
+#root .form-container button{
+    background-color:gray;
+    cursor: pointer;
+    min-width: 160px;
+    height: 50px;
+    border-radius: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
+    color: white;
+    border: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+#root .form-container button:hover{
+    background-color: darkgreen;
+    transform: translateY(-1px);
+}
+#root .form-container button:disabled{
+    opacity: 0.7;
+    cursor: progress;
+}
+
+.form-error{
+    color: #b91c1c;
+    font-size: 0.9rem;
+    margin-top: 6px;
+    margin-bottom: 0;
+}
+
+.form-error--global{
+    margin-top: 24px;
+    text-align: center;
+}

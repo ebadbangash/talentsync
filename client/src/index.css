@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  color-scheme: light;
+  --brand-primary: #3c4df1;
+  --brand-primary-dark: #2532c6;
+  --brand-secondary: #3cc7a1;
+  --brand-surface: #ffffff;
+  --brand-surface-alt: #f5f7fb;
+  --brand-surface-strong: #111b2a;
+  --brand-outline: rgba(13, 40, 135, 0.12);
+  --brand-outline-strong: rgba(13, 40, 135, 0.22);
+  --brand-text: #1a2234;
+  --brand-text-muted: #5c6275;
+  --brand-success: #2fb171;
+  --brand-warning: #f5b400;
+  --brand-danger: #e35151;
+  --brand-radius-sm: 12px;
+  --brand-radius-md: 18px;
+  --brand-radius-lg: 28px;
+  --brand-shadow-sm: 0 10px 30px -22px rgba(13, 22, 69, 0.4);
+  --brand-shadow-md: 0 24px 55px -30px rgba(13, 22, 69, 0.45);
+  --brand-shadow-lg: 0 40px 80px -35px rgba(13, 22, 69, 0.55);
+  --brand-gradient: linear-gradient(135deg, #3c4df1 0%, #5a61ff 48%, #3cc7a1 100%);
+  --surface-primary: rgba(15, 23, 42, 0.88);
+  --color-text: #f8fbff;
+  --color-text-inverse: #0f172a;
+  --color-accent: #6366f1;
+  --color-accent-soft: rgba(129, 140, 248, 0.9);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: 'Inter', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--brand-text);
+  background: linear-gradient(180deg, rgba(236, 240, 255, 0.65) 0%, rgba(246, 248, 255, 0.9) 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+a {
+  color: inherit;
+}

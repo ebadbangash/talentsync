@@ -1,0 +1,96 @@
+.signup-page {
+  background: radial-gradient(circle at 10% 15%, rgba(15, 157, 88, 0.18), transparent 55%),
+    radial-gradient(circle at 85% 25%, rgba(47, 62, 201, 0.22), transparent 45%),
+    linear-gradient(135deg, #f5f7ff 0%, #eef6ff 100%);
+}
+
+.signup-card {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signup-card .auth-form {
+  order: 1;
+  background: #ffffff;
+}
+
+.signup-illustration {
+  position: relative;
+  padding: clamp(2.75rem, 4vw, 3.6rem);
+  color: #0b163a;
+  background: linear-gradient(200deg, rgba(255, 255, 255, 0.88) 0%, rgba(232, 241, 255, 0.98) 50%, #ffffff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup-illustration::before {
+  content: '';
+  position: absolute;
+  inset: 2rem;
+  border-radius: 28px;
+  background: linear-gradient(120deg, rgba(47, 62, 201, 0.12), rgba(15, 157, 88, 0.12));
+  filter: blur(45px);
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+.signup-illustration__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 420px;
+  text-align: left;
+}
+
+.signup-illustration__content h3 {
+  font-size: clamp(1.6rem, 2vw + 1rem, 2.2rem);
+  margin: 0;
+  color: #16204f;
+}
+
+.signup-illustration__content ul {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+  color: #293260;
+  font-size: 0.98rem;
+}
+
+.signup-illustration__content li {
+  line-height: 1.55;
+}
+
+.signup-illustration__footer p {
+  margin: 0;
+  color: #455072;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .signup-card {
+    grid-template-columns: 1fr;
+  }
+
+  .signup-illustration {
+    order: 2;
+    padding: 2.4rem 2rem 2.8rem;
+  }
+
+  .signup-illustration::before {
+    inset: 1.4rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .signup-illustration {
+    padding: 2rem 1.6rem 2.4rem;
+  }
+
+  .signup-illustration__content {
+    gap: 1.1rem;
+  }
+}
