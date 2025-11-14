@@ -35,21 +35,21 @@ pipeline {
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker images...'
-                sh 'docker-compose build'
+                sh 'docker compose build'
             }
         }
         
         stage('Stop Old Containers') {
             steps {
                 echo 'Stopping old containers...'
-                sh 'docker-compose down || true'
+                sh 'docker compose down || true'
             }
         }
         
         stage('Deploy') {
             steps {
-                echo 'Deploying with Docker Compose...'
-                sh 'docker-compose up -d'
+                echo 'Deploying application...'
+                sh 'docker compose up -d'
             }
         }
         
@@ -69,7 +69,7 @@ pipeline {
         }
         failure {
             echo 'Deployment failed!'
-            sh 'docker-compose logs'
+            sh 'docker compose logs || true'
         }
         always {
             echo 'Cleaning up...'
