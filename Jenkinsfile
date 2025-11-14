@@ -58,7 +58,7 @@ pipeline {
                 echo 'Performing health check...'
                 sh 'sleep 15'
                 sh 'docker exec talentsync-client curl -f http://localhost || exit 1'
-                sh 'docker exec talentsync-server curl -f http://localhost:5000/api/users || exit 1'
+                sh 'docker exec talentsync-server wget -q --spider http://localhost:5000/api/users || exit 1'
             }
         }
     }
