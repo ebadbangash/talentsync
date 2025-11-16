@@ -1,4 +1,4 @@
-# TalentSync Docker Deployment Guide
+ # TalentSync Docker Deployment Guide
 
 This guide covers running TalentSync locally with Docker and deploying to AWS EC2.
 
