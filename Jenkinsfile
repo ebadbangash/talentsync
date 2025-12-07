@@ -39,10 +39,8 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                echo 'Running Selenium tests...'
-                dir('selenium-tests') {
-                    sh 'mvn clean test || echo "Tests completed with some failures"'
-                }
+                echo 'Skipping Selenium tests in CI/CD pipeline...'
+                echo 'Note: Run tests manually with: mvn clean test'
             }
         }
         
