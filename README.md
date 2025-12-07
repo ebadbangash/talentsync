@@ -1,5 +1,6 @@
-# 🚀 JOB APPLICATION WEBSITE
+# 🚀 TALENTSYNC - JOB APPLICATION PLATFORM
 ### *Where Dreams Meet Opportunity* ✨
+### *Connecting Talent with Perfect Opportunities - Last Updated: December 2025*
 
 ```
      ██╗ ██████╗ ██████╗     ██╗  ██╗██╗   ██╗███╗   ██╗████████╗
@@ -23,7 +24,7 @@
 
 ## 🌟 THE EXPERIENCE
 
-Welcome to the **Job Application Website** - a sleek, animated platform designed to transform how job seekers and employers connect! This isn't just another job board; it's a complete ecosystem built for the future of work.
+Welcome to **TalentSync** - a sleek, animated platform designed to transform how job seekers and employers connect! This isn't just another job board; it's a complete ecosystem built for the future of work. With comprehensive Selenium test coverage and modern CI/CD integration, TalentSync delivers a reliable, production-ready experience.
 
 ### 🎭 **For Job Seekers**
 ```javascript
