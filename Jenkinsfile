@@ -70,10 +70,10 @@ pipeline {
         stage('Health Check') {
             steps {
                 echo 'Performing health check...'
-                sh 'sleep 20'
+                sh 'sleep 30'
                 script {
-                    sh 'curl -f https://ec2-3-236-8-81.compute-1.amazonaws.com/ || exit 1'
-                    sh 'curl -f https://ec2-3-236-8-81.compute-1.amazonaws.com/api/jobs || exit 1'
+                    sh 'curl -f http://localhost:80/ || exit 1'
+                    sh 'curl -f http://localhost:5000/api/jobs || exit 1'
                 }
             }
         }
