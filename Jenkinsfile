@@ -37,26 +37,6 @@ pipeline {
             }
         }
         
-        stage('Run Selenium Tests') {
-            steps {
-                echo 'Running Selenium tests in Docker container...'
-                script {
-                    docker.image('markhobson/maven-chrome:latest').inside('-u root:root -v /var/lib/jenkins/.m2:/root/.m2') {
-                        dir('selenium-tests') {
-                            sh 'mvn clean test || true'
-                        }
-                    }
-                }
-            }
-        }
-        
-        stage('Publish Test Results') {
-            steps {
-                echo 'Publishing JUnit test results...'
-                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-            }
-        }
-        
         stage('Build Docker Images') {
             steps {
                 echo 'Building Docker images...'
@@ -86,6 +66,26 @@ pipeline {
                     sh 'curl -f http://localhost:80/ || exit 1'
                     sh 'curl -f http://localhost:5000/api/jobs || exit 1'
                 }
+            }
+        }
+        
+        stage('Run Selenium Tests') {
+            steps {
+                echo 'Running Selenium tests in Docker container against deployed app...'
+                script {
+                    docker.image('markhobson/maven-chrome:latest').inside('-u root:root -v /var/lib/jenkins/.m2:/root/.m2 --network host') {
+                        dir('selenium-tests') {
+                            sh 'mvn clean test || true'
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Publish Test Results') {
+            steps {
+                echo 'Publishing JUnit test results...'
+                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
             }
         }
     }
