@@ -1,7 +1,7 @@
 # 🚀 TALENTSYNC - JOB APPLICATION PLATFORM
 ### *Where Dreams Meet Opportunity* ✨
 > **Last Updated:** December 7, 2025 | **Status:** Fully Tested & Production Ready ✅
-> **CI/CD:** Automated testing with Docker + Jenkins
+> **CI/CD:** Automated Docker deployment + Selenium testing with email notifications 📧
 
 ```
      ██╗ ██████╗ ██████╗     ██╗  ██╗██╗   ██╗███╗   ██╗████████╗
