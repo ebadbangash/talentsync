@@ -37,10 +37,26 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
+        stage('Run Selenium Tests') {
+            agent {
+                docker {
+                    image 'markhobson/maven-chrome'
+                    args '-u root:root -v /var/lib/jenkins/.m2:/root/.m2'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Skipping Selenium tests in CI/CD pipeline...'
-                echo 'Note: Run tests manually with: mvn clean test'
+                echo 'Running Selenium tests with Maven...'
+                dir('selenium-tests') {
+                    sh 'mvn clean test || true'
+                }
+            }
+        }
+        
+        stage('Publish Test Results') {
+            steps {
+                echo 'Publishing JUnit test results...'
+                junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
             }
         }
         
@@ -78,6 +94,100 @@ pipeline {
     }
     
     post {
+        always {
+            script {
+                // Get commit author email
+                sh "git config --global --add safe.directory ${env.WORKSPACE}"
+                def committer = sh(
+                    script: "git log -1 --pretty=format:'%ae'",
+                    returnStdout: true
+                ).trim()
+
+                def testResults = ""
+                def total = 0
+                def passed = 0
+                def failed = 0
+                def skipped = 0
+
+                try {
+                    def raw = sh(
+                        script: "grep -h \"<testcase\" selenium-tests/target/surefire-reports/*.xml || echo ''",
+                        returnStdout: true
+                    ).trim()
+
+                    if (raw) {
+                        raw.split('\n').each { line ->
+                            if (line && line.contains('testcase')) {
+                                total++
+
+                                def nameMatcher = (line =~ /name=\"([^\"]+)\"/)
+                                def name = nameMatcher ? nameMatcher[0][1] : "Unknown Test"
+
+                                if (line.contains("<failure")) {
+                                    failed++
+                                    testResults += "❌ ${name} — FAILED\n"
+                                } else if (line.contains("<skipped") || line.contains("</skipped>")) {
+                                    skipped++
+                                    testResults += "⏭️  ${name} — SKIPPED\n"
+                                } else {
+                                    passed++
+                                    testResults += "✅ ${name} — PASSED\n"
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    testResults = "No test results found or error parsing results.\n"
+                }
+
+                def buildStatus = currentBuild.result ?: 'SUCCESS'
+                def statusIcon = buildStatus == 'SUCCESS' ? '✅' : '❌'
+
+                def emailBody = """
+${statusIcon} TalentSync CI/CD Pipeline - Build #${env.BUILD_NUMBER}
+
+Build Status: ${buildStatus}
+Branch: ${env.GIT_BRANCH ?: 'main'}
+Commit: ${env.GIT_COMMIT ? env.GIT_COMMIT.take(7) : 'N/A'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 SELENIUM TEST SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Total Tests:   ${total}
+Passed:        ${passed} ✅
+Failed:        ${failed} ❌
+Skipped:       ${skipped} ⏭️
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 DETAILED TEST RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+${testResults ?: 'No tests were executed.'}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔗 BUILD INFORMATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Build URL: ${env.BUILD_URL}
+Console Output: ${env.BUILD_URL}console
+Test Report: ${env.BUILD_URL}testReport/
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+This is an automated message from Jenkins CI/CD Pipeline.
+"""
+
+                emailext(
+                    to: committer,
+                    subject: "${statusIcon} TalentSync Build #${env.BUILD_NUMBER} - ${buildStatus}",
+                    body: emailBody,
+                    mimeType: 'text/plain'
+                )
+                
+                echo "📧 Test results email sent to: ${committer}"
+            }
+        }
         success {
             echo '✅ Deployment successful! Application is running.'
         }
@@ -85,7 +195,7 @@ pipeline {
             echo '❌ Deployment failed! Checking logs...'
             sh 'docker compose logs --tail=100 || true'
         }
-        always {
+        cleanup {
             echo 'Cleaning up unused Docker resources...'
             sh 'docker system prune -f || true'
         }
