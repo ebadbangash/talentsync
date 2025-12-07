@@ -13,7 +13,7 @@ public class BaseTest {
     
     protected WebDriver driver;
     
-    protected static final String BASE_URL = "http://localhost:3000";
+    protected static final String BASE_URL = "http://localhost";
     
     @BeforeEach
     public void setUp() {
