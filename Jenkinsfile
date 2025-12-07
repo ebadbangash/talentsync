@@ -38,17 +38,14 @@ pipeline {
         }
         
         stage('Run Selenium Tests') {
-            agent {
-                docker {
-                    image 'markhobson/maven-chrome'
-                    args '-u root:root -v /var/lib/jenkins/.m2:/root/.m2'
-                    reuseNode true
-                }
-            }
             steps {
-                echo 'Running Selenium tests with Maven...'
-                dir('selenium-tests') {
-                    sh 'mvn clean test || true'
+                echo 'Running Selenium tests in Docker container...'
+                script {
+                    docker.image('markhobson/maven-chrome:latest').inside('-u root:root -v /var/lib/jenkins/.m2:/root/.m2') {
+                        dir('selenium-tests') {
+                            sh 'mvn clean test || true'
+                        }
+                    }
                 }
             }
         }
