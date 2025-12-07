@@ -24,7 +24,14 @@
 
 ## 🌟 THE EXPERIENCE
 
-Welcome to **TalentSync** - a sleek, animated platform designed to transform how job seekers and employers connect! This isn't just another job board; it's a complete ecosystem built for the future of work. With comprehensive Selenium test coverage and modern CI/CD integration, TalentSync delivers a reliable, production-ready experience.
+Welcome to **TalentSync** - a sleek, animated platform designed to transform how job seekers and employers connect! This isn't just another job board; it's a complete ecosystem built for the future of work. 
+
+✨ **Features:**
+- 🔒 Comprehensive Selenium test coverage (10 automated tests)
+- 🚀 Modern CI/CD integration with Jenkins
+- ☁️ Cloud-ready deployment on AWS EC2
+- 🎨 Responsive design tested across all devices
+- ⚡ Production-ready and battle-tested
 
 ### 🎭 **For Job Seekers**
 ```javascript
