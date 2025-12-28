@@ -10,7 +10,8 @@ const userRoutes=require('./routes/userRoute');
 const cors = require('cors');
 dotenv.config();
 
-const { MONGO_URI = 'mongodb://54.235.1.90:27017/talentsync', PORT = 5000 } = process.env;
+// Default to local MongoDB to avoid remote connectivity issues in dev
+const { MONGO_URI = 'mongodb://localhost:27017/talentsync', PORT = 5000 } = process.env;
 
 if (!MONGO_URI) {
    console.error('Missing MONGO_URI in environment configuration.');
